@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 /**
  * @title DeepDivTrace - Transparent Aid Distribution Protocol
  * @dev Secure, role-based resource distribution for Al-Awtar Organization
- * @author The Lord (DeepDiv)
+ * @author The (DeepDiv) Group
  */
 contract DeepDivTrace is AccessControl, ReentrancyGuard, Pausable {
     bytes32 public constant ALLOCATOR_ROLE = keccak256("ALLOCATOR_ROLE");
