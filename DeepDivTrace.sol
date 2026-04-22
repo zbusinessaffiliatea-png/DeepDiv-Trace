@@ -2,16 +2,19 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 /**
  * @title DeepDivTrace - Transparent Aid Distribution Protocol
  * @dev Secure, role-based resource distribution for Al-Awtar Organization
- * @author The (DeepDiv) Group
+ * @author (DeepDiv)group
  */
 contract DeepDivTrace is AccessControl, ReentrancyGuard, Pausable {
+    using SafeERC20 for IERC20; // استخدام SafeERC20 لحماية التحويلات
+
     bytes32 public constant ALLOCATOR_ROLE = keccak256("ALLOCATOR_ROLE");
     bytes32 public constant AUDITOR_ROLE = keccak256("AUDITOR_ROLE");
 
@@ -30,7 +33,8 @@ contract DeepDivTrace is AccessControl, ReentrancyGuard, Pausable {
 
     event CampaignLaunched(uint256 indexed id, string name, uint256 target);
     event FundsDonated(uint256 indexed id, address indexed donor, uint256 amount);
-    event FundsAllocated(uint256 indexed id, string proofIPFS, uint256 amount);
+    // تم إضافة عنوان المستلم (recipient) لزيادة الشفافية
+    event FundsAllocated(uint256 indexed id, address indexed recipient, string proofIPFS, uint256 amount);
 
     constructor(address _aidTokenAddress) {
         require(_aidTokenAddress != address(0), "Invalid token address");
@@ -58,9 +62,12 @@ contract DeepDivTrace is AccessControl, ReentrancyGuard, Pausable {
         require(campaigns[_campaignId].isActive, "Campaign inactive");
         require(_amount > 0, "Amount must be > 0");
 
-        require(aidToken.transferFrom(msg.sender, address(this), _amount), "Transfer failed");
-
+        // تطبيق نمط (CEI): تحديث الحالة أولاً
         campaigns[_campaignId].currentFunds += _amount;
+        
+        // إجراء التحويل باستخدام safeTransferFrom
+        aidToken.safeTransferFrom(msg.sender, address(this), _amount);
+
         emit FundsDonated(_campaignId, msg.sender, _amount);
     }
 
@@ -72,11 +79,14 @@ contract DeepDivTrace is AccessControl, ReentrancyGuard, Pausable {
         require(campaigns[_campaignId].currentFunds >= _amount, "Insufficient funds in campaign");
         require(_to != address(0), "Invalid recipient");
 
+        // تحديث الحالة أولاً
         campaigns[_campaignId].currentFunds -= _amount;
         
-        require(aidToken.transfer(_to, _amount), "Transfer failed");
+        // إجراء التحويل باستخدام safeTransfer
+        aidToken.safeTransfer(_to, _amount);
 
-        emit FundsAllocated(_campaignId, _proofIPFS, _amount);
+        // تسجيل الحدث مع عنوان المستلم
+        emit FundsAllocated(_campaignId, _to, _proofIPFS, _amount);
     }
 
     function pauseProtocol() external onlyRole(DEFAULT_ADMIN_ROLE) {
