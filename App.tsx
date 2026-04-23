@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { web3Service } from "./lib/web3";
+import { web3Service } from "./web3";
 import { AlertCircle, ShieldCheck, Activity, Wallet, Hash, ChevronRight } from "lucide-react";
 
 export default function App() {
