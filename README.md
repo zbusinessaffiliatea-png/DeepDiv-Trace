@@ -56,6 +56,28 @@ The Big Dream
 · Hitting the ground in Lebanon with actual boots-on-the-ground distribution.
 · Handing over the voting power to you (a DAO) so donors decide which well gets dug next.
 
+🛡️ Trust and Verification
+
+We take security and transparency seriously because we know donors are putting their faith—and their money—into this project. Here's exactly how we're making sure that trust is well placed.
+
+First, our smart contract is fully verified on Arbiscan. That means anyone, whether you're a developer or just a curious donor, can go look at the actual code running the show. No hidden functions, no backdoors, just the logic as it's written.
+
+Second, this is a non-custodial protocol. Let's be crystal clear about what that means: we never see your private keys, we never hold your funds in some central pool, and we can't move a single cent without your wallet signing off on it. Every transaction starts and ends with you.
+
+Third, we are proudly one hundred percent open source. This isn't proprietary software locked away in a private repo. We want developers, security researchers, and anyone with a sharp eye to dig through the codebase and call us out if something looks off. Sunlight is the best audit, and we're inviting it in.
+
+Finally, a quick but important disclaimer: this project is currently in its MVP phase, which is just a fancy way of saying early alpha. It's live and functional, but it's part of the Al-Awtar Organization's broader digital transformation journey. We're building in the open, learning as we go, and committed to maturing this protocol into something rock solid.
+
+📞 Connect with Us
+
+We believe in accountability, and that means being reachable. If you have questions about the Al-Awtar Organization, the DeepDiv-Trace protocol, or just want to chat about what we're building, you can find us through our official channels.
+
+You can reach out on Twitter at vsecsero12884. We're active there and happy to answer questions publicly or in DMs.
+
+Our code lives on GitHub at github.com/zbusinessaffiliatea-png/DeepDiv-Trace.git. Feel free to clone it, fork it, or open an issue if you spot something worth discussing.
+
+And as for development status: we're building in public. No secret roadmaps, no behind-closed-doors updates. You can watch the progress happen in real time, because that's the only way to truly uphold the standards of integrity that Web3 promises.
+
 
 💻 Wanna Tinker?
 
